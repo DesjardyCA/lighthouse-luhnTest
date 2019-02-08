@@ -1,10 +1,28 @@
-exports.check = (num) => {
-  return checkLuhn(num);
+exports.check = (ccNum) => {
+  return checkLuhn(ccNum);
 }
 
 // some function to check validity of passed number
-function checkLuhn(num) {
+// should return bool
+function checkLuhn(ccNum) {
+  var sum = 0;
+  var ccLength = ccNum.length;
+  var alternate = false;
 
+  for (var i = ccNum.length - 1; i >= 0; i--) {
+    var temp = Number.parseInt(ccNum[i]);
+    if (alternate) {
+      temp *= 2;
+      if (temp >= 10) {
+        temp -= 9;
+      }
+    }
+
+    alternate = !alternate;
+    sum += temp;
+  }
+
+  return sum % 10 === 0;
 }
 
 // From the rightmost digit, which is the check digit, and moving left, double the value of every 
